@@ -2,24 +2,129 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TemaFácil</title>
   <style>
-    body { font-family: Arial; background: #f0f0f0; padding: 20px; }
-    h1 { text-align: center; }
-    input, select, button { margin: 5px; padding: 8px; }
-    ul { list-style: none; padding: 0; }
-    li { background: #fff; margin: 5px 0; padding: 10px; border-radius: 5px; }
+    :root {
+      --cor1: #4f46e5;
+      --cor2: #6366f1;
+      --fundo: #f9f9fc;
+      --texto: #333;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--fundo);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+      max-width: 500px;
+      width: 100%;
+      margin: 40px auto;
+    }
+
+    h1 {
+      text-align: center;
+      color: var(--cor1);
+      margin-bottom: 20px;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 6px 0;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--cor1);
+    }
+
+    button {
+      background: var(--cor1);
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: var(--cor2);
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 20px;
+    }
+
+    li {
+      background: #eef;
+      margin-bottom: 10px;
+      padding: 15px;
+      border-radius: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .info {
+      max-width: 80%;
+    }
+
+    .info strong {
+      color: var(--texto);
+      display: block;
+    }
+
+    .info small {
+      color: #555;
+    }
+
+    .concluir {
+      background: crimson;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        margin: 20px;
+        padding: 20px;
+      }
+    }
   </style>
 </head>
 <body>
-  <h1>TemaFácil - Organize seus temas</h1>
+  <div class="container">
+    <h1>TemaFácil 📚</h1>
+    <input id="titulo" placeholder="Título da tarefa">
+    <input id="materia" placeholder="Matéria">
+    <input type="date" id="data">
+    <button onclick="adicionarTarefa()">Adicionar Tarefa</button>
 
-  <input id="titulo" placeholder="Título da tarefa">
-  <input id="materia" placeholder="Matéria">
-  <input type="date" id="data">
-  <button onclick="adicionarTarefa()">Adicionar</button>
-
-  <ul id="listaTarefas"></ul>
+    <ul id="listaTarefas"></ul>
+  </div>
 
   <script>
     const lista = document.getElementById("listaTarefas");
@@ -29,12 +134,21 @@
       const materia = document.getElementById("materia").value;
       const data = document.getElementById("data").value;
 
+      if (!titulo || !materia || !data) {
+        alert("Preencha todos os campos!");
+        return;
+      }
+
       const item = document.createElement("li");
-      item.innerHTML = `<strong>${titulo}</strong> (${materia}) - Entregar até: ${data} 
-        <button onclick="this.parentElement.remove()">Concluir</button>`;
+      item.innerHTML = `
+        <div class="info">
+          <strong>${titulo}</strong>
+          <small>${materia} – até ${data}</small>
+        </div>
+        <button class="concluir" onclick="this.parentElement.remove()">✔</button>
+      `;
       lista.appendChild(item);
 
-      // Limpar os campos
       document.getElementById("titulo").value = "";
       document.getElementById("materia").value = "";
       document.getElementById("data").value = "";
