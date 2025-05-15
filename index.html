@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>TemaFácil</title>
+  <style>
+    body { font-family: Arial; background: #f0f0f0; padding: 20px; }
+    h1 { text-align: center; }
+    input, select, button { margin: 5px; padding: 8px; }
+    ul { list-style: none; padding: 0; }
+    li { background: #fff; margin: 5px 0; padding: 10px; border-radius: 5px; }
+  </style>
+</head>
+<body>
+  <h1>TemaFácil - Organize seus temas</h1>
+
+  <input id="titulo" placeholder="Título da tarefa">
+  <input id="materia" placeholder="Matéria">
+  <input type="date" id="data">
+  <button onclick="adicionarTarefa()">Adicionar</button>
+
+  <ul id="listaTarefas"></ul>
+
+  <script>
+    const lista = document.getElementById("listaTarefas");
+
+    function adicionarTarefa() {
+      const titulo = document.getElementById("titulo").value;
+      const materia = document.getElementById("materia").value;
+      const data = document.getElementById("data").value;
+
+      const item = document.createElement("li");
+      item.innerHTML = `<strong>${titulo}</strong> (${materia}) - Entregar até: ${data} 
+        <button onclick="this.parentElement.remove()">Concluir</button>`;
+      lista.appendChild(item);
+
+      // Limpar os campos
+      document.getElementById("titulo").value = "";
+      document.getElementById("materia").value = "";
+      document.getElementById("data").value = "";
+    }
+  </script>
+</body>
+</html>
